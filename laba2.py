@@ -34,7 +34,7 @@ for num in numbers:
         result = num + f' {digits[pattern[0]]} {len(pattern)}'  # строка - число в котором найдены повторения + цифра прописью с количеством повторений
         output_data += result+'\n'
 
-if output_data == '':
+if not output_data:
     print('В файле нет чисел, подходящих под условие')
 else:
     print('Результат:')
