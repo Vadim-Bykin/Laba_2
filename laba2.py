@@ -10,8 +10,8 @@ digits = {
 }
 
 k = int(input('Введите число k: '))
-
 numbers = []  # список с найденными в последовательности числами
+
 with open('data.txt', 'r') as input_file:
     for row in input_file:  # читаем данные из файла построчно
         cur_number = ''
