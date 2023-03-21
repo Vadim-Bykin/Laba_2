@@ -13,7 +13,7 @@ k = int(input('Введите число k: '))
 numbers = []  # список с найденными в последовательности числами
 
 with open('data.txt', 'r') as input_file:
-    for row in input_file:  # читаем данные из файла построчно
+    for row in input_file:  # читаем данные из файла
         cur_number = ''
         for letter in row:
             if letter in digits.keys() or letter == '-':
