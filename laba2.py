@@ -16,12 +16,12 @@ with open('data.txt', 'r') as input_file:
     for row in input_file:  # читаем данные из файла построчно
         cur_number = ''
         for letter in row:
-            if letter in digits.keys():
+            if letter in digits.keys() or letter == '-':
                 cur_number += letter
             else:
                 # добавляем в список только числа длиннее k символов,не начинающиеся на 0
                 # меньше k гарантированно не подходят под условие задачи
-                if cur_number != '' and len(cur_number) > k and (not cur_number.startswith('0')):
+                if cur_number != '' and len(cur_number) > k and (not cur_number.startswith('0')) and (not cur_number.startswith('-')):
                     numbers.append(cur_number)
                 cur_number = ''
 
