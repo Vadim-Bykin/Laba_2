@@ -7,7 +7,7 @@ digits = {'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': '
 K = 3
 with open('text.txt', 'r') as input_file:
     while True:
-        a = input_file.readline() # читаем строку
+        a = input_file.readline().split() # читаем строку
         if not a: # если файл пустой
             print("Файл *.txt в директории проекта кончился")
             break
