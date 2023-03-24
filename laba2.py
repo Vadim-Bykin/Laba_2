@@ -5,7 +5,7 @@ import re
 # словарь с прописными цифрами
 digits = {'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять', '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять'}
 K = 2
-with open('data.txt', 'r') as input_file:
+with open('text.txt', 'r') as input_file:
     while True:
         a = input_file.readline() # читаем строку
         if not a: # если файл пустой
