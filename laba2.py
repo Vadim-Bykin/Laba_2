@@ -2,39 +2,22 @@
 # Рядом с таким числом выводится повторяющаяся цифра (прописью) и количество повторений.
 
 import re
-
 # словарь с прописными цифрами
-digits = {
-    '0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре',
-    '5': 'пять', '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять'
-}
-
-k = int(input('Введите число k: '))
-numbers = []  # список с найденными в последовательности числами
-
+digits = {'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять', '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять'}
+K = 2
 with open('data.txt', 'r') as input_file:
-    for row in input_file:  # читаем данные из файла
-        cur_number = ''
-        for letter in row:
-            if letter in digits.keys() or letter == '-':
-                cur_number += letter
-            else:
-                # добавляем в список только числа длиннее k символов,не начинающиеся на 0
-                # меньше k гарантированно не подходят под условие задачи
-                if cur_number != '' and len(cur_number) > k and (not cur_number.startswith('0')) and (not cur_number.startswith('-')):
-                    numbers.append(cur_number)
-                cur_number = ''
-
-output_data = ''
-for num in numbers:
-    match = re.compile(r'(\d)\1{%d,}' % (k))  # регулярное выражение
-    for match in match.finditer(num):  # итератор по найденным совпадениям в строке
-        pattern = match.group()  # найденные группы одинаковых цифр длиной > k
-        result = num + f' {digits[pattern[0]]} {len(pattern)}'  # строка - число в котором найдены повторения + цифра прописью с количеством повторений
-        output_data += result+'\n'
-
-if not output_data:
-    print('В файле нет чисел, подходящих под условие')
-else:
-    print('Результат:')
-    print(output_data)
+    while True:
+        a = input_file.readline() # читаем строку
+        if not a: # если файл пустой
+            print("Файл *.txt в директории проекта кончился")
+            break
+        a = ' ' + a + ' '
+        # первый символ не 0, цифры 0 или более раз группа повторяющихся цифр, потом может идти опять группа любых цифр, учитываем \s слева и справа - граница слова
+        pattern = r'\s(?!0)\d*(\d)\1{%d,}\d*\s' % K  # шаблон для поиска последовательностей подходящих под условие задачи
+        for match in re.finditer(pattern, a):  # перебираем все подходящие под шаблон последовательности
+            repeated_dig = match.group(1)  # повторяющаяся цифра лежит в group(1)
+            pattern_repeat = r'([' + repeated_dig + '])\\1{%d,}' % K  # шаблон для поиска только повторяющихся последовательностей в найденной последовательности для подсчета количества повторяющихся цифр
+            print(pattern_repeat)
+            count_repeat = len(re.search(pattern_repeat, match.group(0)).group(0))  # количество повторяющихся цифр в match.group(0) - в исходной поседовательности
+            # здесь после обработки search - в group(0) лежит последовательность только из повторяющихся цифр
+            print(match.group(0) + ' ' + digits[match.group(1)] + ' ' + str(count_repeat))  # результат
